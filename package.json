@@ -1,0 +1,7 @@
+{
+  "name": "musicxml-corrector",
+  "version": "1.0.0",
+  "dependencies": {
+    "opensheetmusicdisplay": "^1.8.8"
+  }
+}
