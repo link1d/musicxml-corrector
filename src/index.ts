@@ -32,9 +32,30 @@ const osmd = new OpenSheetMusicDisplay(container);
 
  const voice2 = trompetas.map(function (x){return x.Notes[2]});
 
- 
+ // Rule: the primary and secondary voices cannot form a minor 3rd.
+  // Buscar Array.prototype.forEach en MDN (voice1 es un array de Note objetos)
+  voice1.forEach(function (note1, i) {
+    const note2 = voice2[i];
+    // Array entries can be undefined if an instrument isn't playing
+    // at a given time.
+    if (!note1 || !note2) {
+      return;
+    }
+    // Array entries can be rests.
+    if (note1.isRest() || note2.isRest()) {
+      return;
+    }
+    const distance = Math.abs(note1.halfTone - note2.halfTone);
+    if (distance === 3) {
+      note1.NoteheadColor = "#FF0000"; // Hex color code (buscar en MDN)
+      note2.NoteheadColor = "#FF0000";
+    }
+  });
 
  console.log (voice1);
  console.log (voice2);
+
+ 
+
 })();
 
