@@ -20,6 +20,21 @@ const osmd = new OpenSheetMusicDisplay(container);
 (async () => {
   // carga el xml a OpenSheetMusicDisplay
   await osmd.load(data);
+
   // Renderiza la partitura
   osmd.render();
+
+  window["osmd"] = osmd;
+
+  const trompetas = osmd.Sheet.Instruments[2].Voices[0].VoiceEntries;
+
+ const voice1 = trompetas.map(function (x){return x.Notes[3]});
+
+ const voice2 = trompetas.map(function (x){return x.Notes[2]});
+
+ 
+
+ console.log (voice1);
+ console.log (voice2);
 })();
+
