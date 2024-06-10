@@ -54,8 +54,6 @@ const osmd = new OpenSheetMusicDisplay(container);
     }
   });
 
- console.log (voice1);
- console.log (voice2);
 
 
  //TROMBONES
@@ -85,7 +83,6 @@ const osmd = new OpenSheetMusicDisplay(container);
   });
 
   //Pruebas a ver qué pasa
-
   const voices = [
     trombones.map(entry => entry.Notes[3]),
     trombones.map(entry => entry.Notes[2]),
@@ -94,9 +91,31 @@ const osmd = new OpenSheetMusicDisplay(container);
   ];
 
  //SAXOS
+ // Esta es la manera de que lea los saxos en clave de sol y que luego tome la primera y segunda voz
+
+ const saxos = osmd.Sheet.Instruments[0].Voices[0].VoiceEntries;
  
+ const voicesx1 = saxos.map(function (x){return x.Notes[1]});
+
+ const voicesx2 = saxos.map(function (x){return x.Notes[2]});
+
+  // Rule: the primary and secondary voices cannot form a major 3rd.
+  voicesx1.forEach(function (note1, i) {
+    const note2 = voicesx2[i];
  
-  
+    if (!note1 || !note2) {
+      return;
+    }
+    // Array entries can be rests.
+    if (note1.isRest() || note2.isRest()) {
+      return;
+    }
+    const distance = Math.abs(note1.halfTone - note2.halfTone);
+    if (distance === 4) {
+      note1.NoteheadColor = "#FF0000";
+      note2.NoteheadColor = "#FF0000";
+    }
+  });
 
 })();
 
